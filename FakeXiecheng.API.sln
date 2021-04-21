@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.809.6
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeXiecheng.API", "FakeXiecheng.API\FakeXiecheng.API.csproj", "{1BC47BC8-D6C1-43EA-B5FB-D5F86F3953FA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1BC47BC8-D6C1-43EA-B5FB-D5F86F3953FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BC47BC8-D6C1-43EA-B5FB-D5F86F3953FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BC47BC8-D6C1-43EA-B5FB-D5F86F3953FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BC47BC8-D6C1-43EA-B5FB-D5F86F3953FA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D32CF037-397D-4A27-80E6-412260976FB2}
+	EndGlobalSection
+EndGlobal
