@@ -31,7 +31,6 @@ namespace FakeXiecheng.API
             services.AddTransient<ITouristRouteRepository, TouristRouteRepository>();
             services.AddDbContext<AppDbContext>(option =>
             {
-                //option.UseSqlServer("server=localhost; Database=FakeXiechengDb; User Id=sa; Password=PaSSword12!");
                 option.UseSqlServer(Configuration["DbContext:ConnectionString"]);
             });
         }
@@ -48,15 +47,6 @@ namespace FakeXiecheng.API
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapGet("/test", async context =>
-                //{
-                //    await context.Response.WriteAsync("Hello from test!");
-                //});
-
-                //endpoints.MapGet("/", async context =>
-                //{
-                //    await context.Response.WriteAsync("Hello World!");
-                //});
                 endpoints.MapControllers();
             });
         }
