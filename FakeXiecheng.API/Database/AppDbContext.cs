@@ -1,6 +1,11 @@
 ﻿using System;
 using FakeXiecheng.API.Models;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
+using System.Reflection;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+
 namespace FakeXiecheng.API.Database
 {
     public class AppDbContext : DbContext
@@ -13,5 +18,18 @@ namespace FakeXiecheng.API.Database
 
         public DbSet<TouristRoute> TouristRoutes { get; set; }
         public DbSet<TouristRoutePicture> TourisitRoutePictures { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            var touristRouteJsonData = File.ReadAllText(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"/Database/touristRoutesMockData.json");
+            IList<TouristRoute> touristRoutes = JsonConvert.DeserializeObject<IList<TouristRoute>>(touristRouteJsonData);
+            modelBuilder.Entity<TouristRoute>().HasData(touristRoutes);
+
+            var touristRoutePictureJsonData = File.ReadAllText(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"/Database/touristRoutePicturesMockData.json");
+            IList<TouristRoutePicture> touristRoutePictures = JsonConvert.DeserializeObject<IList<TouristRoutePicture>>(touristRoutePictureJsonData);
+            modelBuilder.Entity<TouristRoutePicture>().HasData(touristRoutePictures);
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
