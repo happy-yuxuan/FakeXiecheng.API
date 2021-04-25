@@ -36,6 +36,9 @@ namespace FakeXiecheng.API
             {
                 option.UseSqlServer(Configuration["DbContext:ConnectionString"]);
             });
+
+            // 扫描profile文件
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
