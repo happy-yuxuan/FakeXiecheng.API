@@ -15,6 +15,11 @@ namespace FakeXiecheng.API.Services
             _context = context;
         }
 
+        public TouristRoutePicture GetPicture(int pictureId)
+        {
+            return _context.TouristRoutePictures.Where(p => p.Id == pictureId).FirstOrDefault();
+        }
+
         public IEnumerable<TouristRoutePicture> GetPictureByTouristRouteId(Guid touristRouteId)
         {
             return _context.TouristRoutePictures

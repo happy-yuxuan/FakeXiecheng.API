@@ -10,5 +10,6 @@ namespace FakeXiecheng.API.Services
         TouristRoute GetTouristRoutes(Guid touristRouteId);
         bool TouristRouteExists(Guid touristRouteId);
         IEnumerable<TouristRoutePicture> GetPictureByTouristRouteId(Guid touristRouteId);
+        TouristRoutePicture GetPicture(int pictureId);
     }
 }
