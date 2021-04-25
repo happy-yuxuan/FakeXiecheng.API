@@ -15,6 +15,12 @@ namespace FakeXiecheng.API.Services
             _context = context;
         }
 
+        public IEnumerable<TouristRoutePicture> GetPictureByTouristRouteId(Guid touristRouteId)
+        {
+            return _context.TouristRoutePictures
+                .Where(p => p.TouristRouteId == touristRouteId).ToList();
+        }
+
         public IEnumerable<TouristRoute> GetTouristRoutes()
         {
             return _context.TouristRoutes;
@@ -23,6 +29,11 @@ namespace FakeXiecheng.API.Services
         public TouristRoute GetTouristRoutes(Guid touristRouteId)
         {
             return _context.TouristRoutes.FirstOrDefault(nameof => nameof.Id == touristRouteId);
+        }
+
+        public bool TouristRouteExists(Guid touristRouteId)
+        {
+            return _context.TouristRoutes.Any(t => t.Id == touristRouteId);
         }
     }
 }

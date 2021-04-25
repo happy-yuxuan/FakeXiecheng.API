@@ -17,7 +17,7 @@ namespace FakeXiecheng.API.Database
         }
 
         public DbSet<TouristRoute> TouristRoutes { get; set; }
-        public DbSet<TouristRoutePicture> TourisitRoutePictures { get; set; }
+        public DbSet<TouristRoutePicture> TouristRoutePictures { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
