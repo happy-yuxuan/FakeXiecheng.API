@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FakeXiecheng.API.Dtos;
 using FakeXiecheng.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,7 +40,23 @@ namespace FakeXiecheng.API.Controllers
             {
                 return NotFound($"旅游路线{touristRouteId}找不到");
             }
-            return Ok(_touristRouteRepository.GetTouristRoutes(touristRouteId));
+            var touristRouteDto = new TouristRouteDto()
+            {
+                Id = touristRouteFromRepo.Id,
+                Title = touristRouteFromRepo.Title,
+                Description = touristRouteFromRepo.Description,
+                Price = touristRouteFromRepo.OriginalPrice * (decimal)(touristRouteFromRepo.DiscountPresent ?? 1),
+                CreateTime = touristRouteFromRepo.CreateTime,
+                UpdateTime = touristRouteFromRepo.UpdateTime,
+                Features = touristRouteFromRepo.Features,
+                Fees = touristRouteFromRepo.Fees,
+                Notes = touristRouteFromRepo.Notes,
+                Rating = touristRouteFromRepo.Rating,
+                TravelDays = touristRouteFromRepo.TravelDays.ToString(),
+                TripType = touristRouteFromRepo.TripType.ToString(),
+                DepartureCity = touristRouteFromRepo.DepartureCity.ToString()
+            };
+            return Ok(touristRouteDto);
         }
     }
 }
