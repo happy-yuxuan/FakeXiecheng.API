@@ -30,7 +30,7 @@ namespace FakeXiecheng.API.Services
         public IEnumerable<TouristRoute> GetTouristRoutes(
             string keyword,
             string ratingOperator,
-            int ratingValue)
+            int? ratingValue)
         {
             IQueryable<TouristRoute> result =
                 _context.TouristRoutes.Include(t => t.TouristRoutePictures);

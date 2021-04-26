@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using FakeXiecheng.API.Dtos;
+using FakeXiecheng.API.ResourceParameters;
 using FakeXiecheng.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,21 +28,9 @@ namespace FakeXiecheng.API.Controllers
 
         [HttpGet]
         [HttpHead]
-        public IActionResult GetTouristRoutes(
-            [FromQuery] string keyword,
-            string rating //小于lessThan, 大于largerThan, 等于equalTo lessThan3, largerThan2, equalTo5 
-            )
+        public IActionResult GetTouristRoutes([FromQuery] TouristRouteResourceParameters parameters)
         {
-            Regex regex = new Regex(@"([A-Za-z0-9\-]+)(\d+)");
-            Match match = regex.Match(rating);
-            string operatorType = "";
-            int ratingValue = -1;
-            if (match.Success)
-            {
-                operatorType = match.Groups[1].Value;
-                ratingValue = int.Parse(match.Groups[2].Value);
-            }
-            var touristRoutesFromRepo = _touristRouteRepository.GetTouristRoutes(keyword, operatorType, ratingValue);
+            var touristRoutesFromRepo = _touristRouteRepository.GetTouristRoutes(parameters.Keyword, parameters.OperatorType, parameters.RatingValue);
             if (touristRoutesFromRepo == null || touristRoutesFromRepo.Count() <= 0)
             {
                 return NotFound("没有旅游路线");
