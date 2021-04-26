@@ -16,6 +16,15 @@ namespace FakeXiecheng.API.Services
             _context = context;
         }
 
+        public void AddTouristRoute(TouristRoute touristRoute)
+        {
+            if (touristRoute == null)
+            {
+                throw new ArgumentNullException(nameof(touristRoute));
+            }
+            _context.TouristRoutes.Add(touristRoute); // 只是加载到内存里，保存需要用save
+        }
+
         public TouristRoutePicture GetPicture(int pictureId)
         {
             return _context.TouristRoutePictures.Where(p => p.Id == pictureId).FirstOrDefault();
@@ -56,6 +65,11 @@ namespace FakeXiecheng.API.Services
             return _context.TouristRoutes
                 .Include(t => t.TouristRoutePictures)
                 .FirstOrDefault(nameof => nameof.Id == touristRouteId);
+        }
+
+        public bool Save()
+        {
+            return (_context.SaveChanges() >= 0);
         }
 
         public bool TouristRouteExists(Guid touristRouteId)
