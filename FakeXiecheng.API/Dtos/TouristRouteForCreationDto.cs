@@ -5,7 +5,7 @@ using FakeXiecheng.API.Dtos;
 
 namespace FakeXiecheng.API.Controllers
 {
-    public class TouristRouteForCreationDto
+    public class TouristRouteForCreationDto: IValidatableObject
     {
         [Required(ErrorMessage = "title 不可为空")]
         [MaxLength(100)]
@@ -29,5 +29,15 @@ namespace FakeXiecheng.API.Controllers
         public string DepartureCity { get; set; }
         public ICollection<TouristRoutePictureForCreationDto> TouristRoutePictures { get; set; }
             = new List<TouristRoutePictureForCreationDto>();
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (Title == Description)
+            {
+                yield return new ValidationResult(
+                    "路线名称必须与路线描述不同",
+                    new[] { "TouristRouteForCreationDto" });
+            }
+        }
     }
 }
