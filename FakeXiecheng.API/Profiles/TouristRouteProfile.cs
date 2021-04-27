@@ -29,7 +29,7 @@ namespace FakeXiecheng.API.Profiles
                     dest => dest.Id,
                     opt => opt.MapFrom(src => Guid.NewGuid()));
 
-
+            CreateMap<TouristRouteForUpdateDto, TouristRoute>();
         }
     }
 }
