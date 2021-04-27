@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using FakeXiecheng.API.Dtos;
 
 namespace FakeXiecheng.API.Controllers
 {
     public class TouristRouteForCreationDto
     {
+        [Required(ErrorMessage = "title 不可为空")]
+        [MaxLength(100)]
         public string Title { get; set; }
+        [Required]
+        [MaxLength(1500)]
         public string Description { get; set; }
         // 计算方式：原价 * 折扣
         public decimal Price { get; set; }
