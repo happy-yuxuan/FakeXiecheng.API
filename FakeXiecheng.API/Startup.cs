@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Serialization;
 
 namespace FakeXiecheng.API
 {
@@ -31,26 +32,33 @@ namespace FakeXiecheng.API
             services.AddControllers(setupAction =>
             {
                 setupAction.ReturnHttpNotAcceptable = true;
-            }).AddXmlDataContractSerializerFormatters()
-            .ConfigureApiBehaviorOptions(setupAction =>
-            {
-                setupAction.InvalidModelStateResponseFactory = context =>
+            })
+                .AddNewtonsoftJson(setupAction =>
                 {
-                    var problemDetail = new ValidationProblemDetails(context.ModelState)
+                    setupAction.SerializerSettings.ContractResolver =
+                        new CamelCasePropertyNamesContractResolver();
+                })
+                .AddXmlDataContractSerializerFormatters()
+                .ConfigureApiBehaviorOptions(setupAction =>
+                {
+                    setupAction.InvalidModelStateResponseFactory = context =>
                     {
-                        Type = "无所谓",
-                        Title = "数据验证失败",
-                        Status = StatusCodes.Status422UnprocessableEntity,
-                        Detail = "请看详细说明",
-                        Instance = context.HttpContext.Request.Path
+                        var problemDetail = new ValidationProblemDetails(context.ModelState)
+                        {
+                            Type = "无所谓",
+                            Title = "数据验证失败",
+                            Status = StatusCodes.Status422UnprocessableEntity,
+                            Detail = "请看详细说明",
+                            Instance = context.HttpContext.Request.Path
+                        };
+                        problemDetail.Extensions.Add("traceId", context.HttpContext.TraceIdentifier);
+                        return new UnprocessableEntityObjectResult(problemDetail)
+                        {
+                            ContentTypes = { "application/problem+json" }
+                        };
                     };
-                    problemDetail.Extensions.Add("traceId", context.HttpContext.TraceIdentifier);
-                    return new UnprocessableEntityObjectResult(problemDetail)
-                    {
-                        ContentTypes = { "application/problem+json" }
-                    };
-                };
-            });
+                });
+
             services.AddTransient<ITouristRouteRepository, TouristRouteRepository>();
             services.AddDbContext<AppDbContext>(option =>
             {
