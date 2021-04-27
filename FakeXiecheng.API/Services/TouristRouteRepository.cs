@@ -25,6 +25,20 @@ namespace FakeXiecheng.API.Services
             _context.TouristRoutes.Add(touristRoute); // 只是加载到内存里，保存需要用save
         }
 
+        public void AddTouristRoutePicture(Guid touristRouteId, TouristRoutePicture touristRoutePicture)
+        {
+            if (touristRouteId == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(touristRouteId));
+            }
+            if (touristRoutePicture == null)
+            {
+                throw new ArgumentNullException(nameof(touristRoutePicture));
+            }
+            touristRoutePicture.TouristRouteId = touristRouteId;
+            _context.TouristRoutePictures.Add(touristRoutePicture);
+        }
+
         public TouristRoutePicture GetPicture(int pictureId)
         {
             return _context.TouristRoutePictures.Where(p => p.Id == pictureId).FirstOrDefault();
