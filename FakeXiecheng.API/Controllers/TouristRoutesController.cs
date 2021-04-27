@@ -44,7 +44,7 @@ namespace FakeXiecheng.API.Controllers
         [HttpHead("{touristRouteId:Guid}", Name = "GetTouristRouteById")]
         public IActionResult GetTouristRouteById(Guid touristRouteId)
         {
-            var touristRouteFromRepo = _touristRouteRepository.GetTouristRoutes(touristRouteId);
+            var touristRouteFromRepo = _touristRouteRepository.GetTouristRoute(touristRouteId);
             if (touristRouteFromRepo == null)
             {
                 return NotFound($"旅游路线{touristRouteId}找不到");
@@ -76,7 +76,7 @@ namespace FakeXiecheng.API.Controllers
             {
                 return NotFound("旅游路线找不到");
             }
-            var touristRouteFromRepo = _touristRouteRepository.GetTouristRoutes(touristRouteId);
+            var touristRouteFromRepo = _touristRouteRepository.GetTouristRoute(touristRouteId);
             // 1. 映射dto
             // 2. 更新dto
             // 3. 映射model

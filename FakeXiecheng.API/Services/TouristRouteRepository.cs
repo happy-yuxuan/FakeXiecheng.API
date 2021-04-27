@@ -74,7 +74,7 @@ namespace FakeXiecheng.API.Services
             return result.ToList();
         }
 
-        public TouristRoute GetTouristRoutes(Guid touristRouteId)
+        public TouristRoute GetTouristRoute(Guid touristRouteId)
         {
             return _context.TouristRoutes
                 .Include(t => t.TouristRoutePictures)
