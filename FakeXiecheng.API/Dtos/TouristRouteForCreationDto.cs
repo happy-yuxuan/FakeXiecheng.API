@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using FakeXiecheng.API.Dtos;
 
 namespace FakeXiecheng.API.Controllers
 {
@@ -20,5 +22,7 @@ namespace FakeXiecheng.API.Controllers
         public string TravelDays { get; set; }
         public string TripType { get; set; }
         public string DepartureCity { get; set; }
+        public ICollection<TouristRoutePictureForCreationDto> TouristRoutePictures { get; set; }
+            = new List<TouristRoutePictureForCreationDto>();
     }
 }
