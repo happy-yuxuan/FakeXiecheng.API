@@ -1,3 +1,6 @@
+# Mono auto generated files
+mono_crash.*
+
 # globs
 Makefile.in
 *.userprefs
