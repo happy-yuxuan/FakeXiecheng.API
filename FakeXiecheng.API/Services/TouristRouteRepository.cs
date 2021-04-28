@@ -90,5 +90,10 @@ namespace FakeXiecheng.API.Services
         {
             return _context.TouristRoutes.Any(t => t.Id == touristRouteId);
         }
+
+        public void DeleteTouristRoute(TouristRoute touristRoute)
+        {
+            _context.TouristRoutes.Remove(touristRoute);
+        }
     }
 }
