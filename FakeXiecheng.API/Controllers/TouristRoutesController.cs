@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using FakeXiecheng.API.Dtos;
+using FakeXiecheng.API.Helper;
 using FakeXiecheng.API.Models;
 using FakeXiecheng.API.ResourceParameters;
 using FakeXiecheng.API.Services;
@@ -122,6 +123,22 @@ namespace FakeXiecheng.API.Controllers
 
             var touristRoute = _touristRouteRepository.GetTouristRoute(touristRouteId);
             _touristRouteRepository.DeleteTouristRoute(touristRoute);
+            _touristRouteRepository.Save();
+
+            return NoContent();
+        }
+
+        [HttpDelete("({touristIds})")]
+        public IActionResult DeleteByIds(
+            [ModelBinder(BinderType = typeof(ArrayModelBinder))][FromRoute] IEnumerable<Guid> touristIds)
+        {
+            if (touristIds == null)
+            {
+                return BadRequest();
+            }
+
+            var touristRoutesFromRepo = _touristRouteRepository.GetTouristRouteByIdList(touristIds);
+            _touristRouteRepository.DeleteTouristRoutes(touristRoutesFromRepo);
             _touristRouteRepository.Save();
 
             return NoContent();

@@ -100,5 +100,15 @@ namespace FakeXiecheng.API.Services
         {
             _context.TouristRoutePictures.Remove(picture);
         }
+
+        public IEnumerable<TouristRoute> GetTouristRouteByIdList(IEnumerable<Guid> ids)
+        {
+            return _context.TouristRoutes.Where(t => ids.Contains(t.Id)).ToList();
+        }
+
+        public void DeleteTouristRoutes(IEnumerable<TouristRoute> touristRoutes)
+        {
+            _context.TouristRoutes.RemoveRange(touristRoutes);
+        }
     }
 }
