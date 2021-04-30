@@ -57,6 +57,7 @@ namespace FakeXiecheng.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateTouristRoute([FromBody] TouristRouteForCreationDto touristRouteForCreationDto)
         {
@@ -72,6 +73,7 @@ namespace FakeXiecheng.API.Controllers
         }
 
         [HttpPut("{touristRouteId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateTouristRoute(
             [FromRoute] Guid touristRouteId,
@@ -93,6 +95,7 @@ namespace FakeXiecheng.API.Controllers
         }
 
         [HttpPatch("{touristRouteId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PartiallyUpdateTouristRoute(
             [FromRoute] Guid touristRouteId,
@@ -118,6 +121,7 @@ namespace FakeXiecheng.API.Controllers
         }
 
         [HttpDelete("{touristRouteId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteTouristRoute([FromRoute] Guid touristRouteId)
         {
@@ -134,6 +138,7 @@ namespace FakeXiecheng.API.Controllers
         }
 
         [HttpDelete("({touristIds})")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteByIds(
             [ModelBinder(BinderType = typeof(ArrayModelBinder))][FromRoute] IEnumerable<Guid> touristIds)

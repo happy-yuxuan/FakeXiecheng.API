@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -18,20 +19,34 @@ namespace FakeXiecheng.API.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
         public AuthenticateController(
             IConfiguration configuration,
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInmanager)
         {
             _configuration = configuration;
             _userManager = userManager;
+            _signInManager = signInmanager;
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginDto loginDto)
+        public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginDto)
         {
             // 1 验证用户名密码
+            var loginResult = await _signInManager.PasswordSignInAsync(
+                loginDto.Email,
+                loginDto.Password,
+                false,
+                false);
+            if (!loginResult.Succeeded)
+            {
+                return BadRequest();
+            }
+
+            var user = await _userManager.FindByNameAsync(loginDto.Email);
 
             // 2 创建jwt
 
@@ -39,11 +54,20 @@ namespace FakeXiecheng.API.Controllers
             var signingAlgorithm = SecurityAlgorithms.HmacSha256;
 
             // 2-2 payload
-            var claims = new[]
+            var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, "fake_user_id"),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                 //new Claim(ClaimTypes.Role, "Admin")
             };
+
+            // 2-3 获取用户权限
+            var roleNames = await _userManager.GetRolesAsync(user);
+            foreach(var roleName in roleNames)
+            {
+                var roleClaim = new Claim(ClaimTypes.Role, roleName);
+                claims.Add(roleClaim);
+            }
+
 
             // 2-3 signiture
             var secreByte = Encoding.UTF8.GetBytes(_configuration["Authentication:SecretKey"]);
