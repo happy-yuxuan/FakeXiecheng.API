@@ -35,7 +35,8 @@ namespace FakeXiecheng.API.Controllers
             // 2-2 payload
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, "fake_user_id")
+                new Claim(JwtRegisteredClaimNames.Sub, "fake_user_id"),
+                //new Claim(ClaimTypes.Role, "Admin")
             };
 
             // 2-3 signiture
