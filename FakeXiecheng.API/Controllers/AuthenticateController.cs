@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using FakeXiecheng.API.Dtos;
+using FakeXiecheng.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,13 +19,13 @@ namespace FakeXiecheng.API.Controllers
     public class AuthenticateController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
         public AuthenticateController(
             IConfiguration configuration,
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInmanager)
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInmanager)
         {
             _configuration = configuration;
             _userManager = userManager;
@@ -93,7 +94,7 @@ namespace FakeXiecheng.API.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
             // 1 使用用户名创建用户对象
-            var user = new IdentityUser()
+            var user = new ApplicationUser()
             {
                 UserName = registerDto.Email,
                 Email = registerDto.Email
